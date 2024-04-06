@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="shoppingstyles.css">
+</head>
+<body>
+  <header>
+    <h1>Shopping Cart</h1>
+  </header>
+
+  <section class="products">
+    <div class="product" data-name="Rice" data-price="60">
+      <img src="rice.jpeg" alt="Rice" height="60%">
+      <h2>Rice</h2>
+      <p>₹60.00</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Egg" data-price="10">
+      <img src="eggs.jpeg" alt="Egg" height="60%">
+      <h2>Egg</h2>
+      <p>₹10.00</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Oil" data-price="50">
+      <img src="oil.jpeg" alt="Oil" height="60%">
+      <h2>Oil</h2>
+      <p>₹50.00</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Carrot" data-price="20">
+      <img src="carrots.jpeg" alt="Carrot" height="60%">
+      <h2>Carrot</h2>
+      <p>₹20.00</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Onion" data-price="15">
+      <img src="onions.jpeg" alt="Onion" height="60%">
+      <h2>Onion</h2>
+      <p>₹15.00</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+    <div class="product" data-name="Capsicum" data-price="25">
+      <img src="capsicums.png" alt="Capsicum" height="60%">
+      <h2>Capsicum</h2>
+      <p>₹25.00</p>
+      <button onclick="addToCart(this)">Add to Cart</button>
+    </div>
+  </section>
+
+  <aside class="cart">
+    <h2>Cart</h2>
+    <ul id="cartItems">
+      <!-- Cart items will be dynamically added here -->
+    </ul>
+    <p id="totalAmount">Total: ₹0.00</p>
+    <button onclick="checkout()">Checkout</button>
+  </aside>
+
+  <footer>
+    <p>&copy; 2024 Shopping Cart</p>
+  </footer>
+
+  <script>
+    function addToCart(button) {
+      var product = button.parentElement;
+      var name = product.getAttribute("data-name");
+      var price = parseFloat(product.getAttribute("data-price"));
+
+      var cart = document.getElementById("cartItems");
+      var totalAmount = document.getElementById("totalAmount");
+      var existingItems = cart.getElementsByTagName("li");
+
+      for (var i = 0; i < existingItems.length; i++) {
+        if (existingItems[i].textContent === name) {
+          alert("Product is already in the cart.");
+          return;
+        }
+      }
+
+      var item = document.createElement("li");
+      item.textContent = name + " - ₹" + price.toFixed(2);
+      var removeButton = document.createElement("button");
+      removeButton.textContent = "Remove";
+      removeButton.onclick = function() {
+        cart.removeChild(item);
+        updateTotal();
+      };
+      item.appendChild(removeButton);
+      cart.appendChild(item);
+
+      updateTotal();
+    }
+
+    function updateTotal() {
+      var cart = document.getElementById("cartItems");
+      var totalAmount = document.getElementById("totalAmount");
+      var items = cart.getElementsByTagName("li");
+      var total = 0;
+
+      for (var i = 0; i < items.length; i++) {
+        var itemPrice = parseFloat(items[i].textContent.split(" - ")[1].substr(1));
+        total += itemPrice;
+      }
+
+      totalAmount.textContent = "Total: ₹" + total.toFixed(2);
+    }
+
+    function checkout() {
+      alert("Checkout completed!");
+    }
+  </script>
+</body>
+</html>
